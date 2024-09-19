@@ -1,6 +1,6 @@
 /**
  * HamsterKombat Playground Games Promo Code Keys Generator
- * @author Aaron Delasy
+ * @author Aaron Delasy & yaelahrip
  * @version 1.14.0
  */
 
@@ -882,7 +882,7 @@ class GamePromo {
       throw new Error(`Unable to get ${gameKey} promo.`);
     }
 
-    let authToken = ""; //1716xx87247yGO9WloCExxxxYxxx5I444UIxxxxxp0cVGxxxxxxxxxxxxxxxxxxxxxx
+    let authToken = "your token here"; //1716xx87247yGO9WloCExxxxYxxx5I444UIxxxxxp0cVGxxxxxxxxxxxxxxxxxxxxxx
 
     fetch("https://api.hamsterkombatgame.io/clicker/apply-promo", {
       "headers": {
