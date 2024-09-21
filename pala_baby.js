@@ -941,7 +941,7 @@ class GamePromo {
 
     
     if(authToken != ""){      
-      fetch("https://api.hamsterkombatgame.io/clicker/apply-promo", {
+      fetch("https://api.hamsterkombatgame.io/interlude/apply-promo", {
         "headers": {
           "accept": "application/json",
           "accept-language": "en-US,en;q=0.9",
