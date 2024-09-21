@@ -1,8 +1,13 @@
 /**
  * HamsterKombat Playground Games Promo Code Keys Generator
- * @author Aaron Delasy & yaelahrip
- * @version 1.14.0
+ * @author Aaron Delasy & yaelharip
+ * @version 1.15.1
  */
+
+///////////////////////////////////////////////////
+let authToken = ""; //1716xx87247yGO9WloCExxxxYxxx5I444UIxxxxxp0cVGxxxxxxxxxxxxxxxxxxxxxx your token here
+
+//////////////////////////////////
 
 const DEBUG = parseArg(['debug'], (it) => (['true', 'false', ''].includes(it) ? it !== 'false' : null), false);
 const CLIENT_STRATEGY = parseArg(['client-strategy'], (it) => (['keep', 'unique'].includes(it) ? it : null), 'unique');
@@ -13,7 +18,7 @@ const WITH_RANDOMIZED_DELAYS = true;
 const WITH_REINSTALL_TIME = true;
 const DEVICE = parseArg(['d', 'device'], (it) => (['android', 'ios'].includes(it) ? it : null));
 const EXCLUDE = parseArg(['e', 'exclude'], (it) => it.split(',').map((it2) => it2.trim()).filter((it2) => it2 !== ''), []);
-const KEYS = parseArg(['k', 'keys'], (it) => it.split(',').map((it2) => it2.trim()).filter((it2) => it2 !== ''), ['4', 'FLUF:8']);
+const KEYS = parseArg(['k', 'keys'], (it) => it.split(',').map((it2) => it2.trim()).filter((it2) => it2 !== ''), ['4']);
 const ONLY = parseArg(['o', 'only'], (it) => it.split(',').map((it2) => it2.trim()).filter((it2) => it2 !== ''), []);
 
 //
@@ -21,6 +26,58 @@ const ONLY = parseArg(['o', 'only'], (it) => it.split(',').map((it2) => it2.trim
 //
 
 const GAMES = {
+  FCTRY: async ({ _, collect, delay, event, getClient, id, instance, login, origin, setup }) => {
+    setup('app-token', 'd02fc404-8985-4305-87d8-32bd4e66bb16');
+    setup('promo-id', 'd02fc404-8985-4305-87d8-32bd4e66bb16');
+    setup('unity-version', '2022.3.46f1');
+
+    if (origin === 'ios') {
+      setup('user-agent', 'FactoryWorld/75 CFNetwork/1568.100.1 Darwin/24.0.0');
+    } else {
+      setup('user-agent', 'UnityPlayer/2022.3.46f1 (UnityWebRequest/1.0, libcurl/8.5.0-DEV)');
+    }
+
+    await login(1, { clientId: id('uuid'), clientOrigin: origin, clientVersion: '1.43.18' });
+    await getClient(1);
+
+    while (!instance.hasCode) {
+      await delay(TIMING_STRATEGY === 'realistic' ? 150_000 : 20_000);
+      await event(1, { eventId: id('uuid'), eventOrigin: 'undefined', eventType: 'HamsterGathred' });
+    }
+
+    await collect(1);
+  },
+  WATER: async ({ _, collect, delay, event, getClient, id, instance, login, origin, setup }) => {
+    setup('app-token', 'daab8f83-8ea2-4ad0-8dd5-d33363129640');
+    setup('promo-id', 'daab8f83-8ea2-4ad0-8dd5-d33363129640');
+    setup('unity-version', _`ios ? 2022.3.25f1 : 2022.3.46f1`);
+
+    if (origin === 'ios') {
+      setup('user-agent', 'AmongWater/1 CFNetwork/1568.100.1 Darwin/24.0.0');
+    } else {
+      setup('user-agent', 'UnityPlayer/2022.3.46f1 (UnityWebRequest/1.0, libcurl/8.5.0-DEV)');
+    }
+
+    await login(1, { clientId: id(_`ios ? UUID : h32`), clientOrigin: origin, clientVersion: _`ios ? 1.0.37 : 1.0.40` });
+    await getClient(1);
+
+    if (TIMING_STRATEGY === 'realistic') {
+      await delay(180_000);
+    }
+
+    while (!instance.hasCode) {
+      await delay(TIMING_STRATEGY === 'realistic' ? 30_000 : 20_000);
+      await event(1, { eventId: id('uuid'), eventOrigin: 'undefined' });
+
+      if (TIMING_STRATEGY === 'realistic') {
+        await delay(60_000);
+      }
+
+      await getClient(1);
+    }
+
+    await collect(1);
+  },
   INFCT: async ({ collect, delay, event, id, instance, login, origin, setup }) => {
     setup('app-token', 'eb518c4b-e448-4065-9d33-06f3039f0fcb');
     setup('promo-id', 'eb518c4b-e448-4065-9d33-06f3039f0fcb');
@@ -882,29 +939,30 @@ class GamePromo {
       throw new Error(`Unable to get ${gameKey} promo.`);
     }
 
-    let authToken = "your token here"; //1716xx87247yGO9WloCExxxxYxxx5I444UIxxxxxp0cVGxxxxxxxxxxxxxxxxxxxxxx
-
-    fetch("https://api.hamsterkombatgame.io/clicker/apply-promo", {
-      "headers": {
-        "accept": "application/json",
-        "accept-language": "en-US,en;q=0.9",
-        "authorization": "Bearer "+authToken,
-        "cache-control": "no-cache",
-        "content-type": "application/json",
-        "pragma": "no-cache",
-        "priority": "u=1, i",
-        "sec-ch-ua": "\"Chromium\";v=\"128\", \"Not;A=Brand\";v=\"24\", \"Google Chrome\";v=\"128\"",
-        "sec-ch-ua-mobile": "?0",
-        "sec-ch-ua-platform": "\"Windows\"",
-        "sec-fetch-dest": "empty",
-        "sec-fetch-mode": "cors",
-        "sec-fetch-site": "same-site",
-        "Referer": "https://hamsterkombatgame.io/",
-        "Referrer-Policy": "strict-origin-when-cross-origin"
-      },
-      "body": '{"promoCode":"'+this.key+'"}',
-      "method": "POST"
-    });
+    
+    if(authToken != ""){      
+      fetch("https://api.hamsterkombatgame.io/clicker/apply-promo", {
+        "headers": {
+          "accept": "application/json",
+          "accept-language": "en-US,en;q=0.9",
+          "authorization": "Bearer "+authToken,
+          "cache-control": "no-cache",
+          "content-type": "application/json",
+          "pragma": "no-cache",
+          "priority": "u=1, i",
+          "sec-ch-ua": "\"Chromium\";v=\"128\", \"Not;A=Brand\";v=\"24\", \"Google Chrome\";v=\"128\"",
+          "sec-ch-ua-mobile": "?0",
+          "sec-ch-ua-platform": "\"Windows\"",
+          "sec-fetch-dest": "empty",
+          "sec-fetch-mode": "cors",
+          "sec-fetch-site": "same-site",
+          "Referer": "https://hamsterkombatgame.io/",
+          "Referrer-Policy": "strict-origin-when-cross-origin"
+        },
+        "body": '{"promoCode":"'+this.key+'"}',
+        "method": "POST"
+      });
+    }
 
     return this.key;
   }
