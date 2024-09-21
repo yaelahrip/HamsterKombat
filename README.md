@@ -1,7 +1,7 @@
 # HamsterKombat
 Hamster Kombat auto Claim Key
 
-LINE 885
+LINE 8
 let authToken = "your token here"; //1716xx87247yGO9WloCExxxxYxxx5I444UIxxxxxp0cVGxxxxxxxxxxxxxxxxxxxxxx
 
 Change authToken with your own bearer Token hehehe ~
